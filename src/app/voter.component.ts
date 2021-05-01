@@ -21,7 +21,7 @@ import { EVENTS } from "./preact/domain";
 export class VoterComponent implements AfterViewInit {
   @Input() name: string;
   @Output() voted = new EventEmitter<boolean>();
-  @ViewChild("preactRoot", {}) preactRoot;
+  @ViewChild("preactRoot", { static: false }) preactRoot;
 
   didVote = false;
 
@@ -32,11 +32,11 @@ export class VoterComponent implements AfterViewInit {
     initPreact(this.preactRoot.nativeElement, {
       name: this.name,
       onRef: (preactInstance) => {
+        // This callback returns the preactInstance. Not sure if I want / need this yet.
         console.log({ preactInstance });
       },
       didVote: this.didVote,
       onClick: (agreed) => {
-        console.log("onClick", { agreed });
         this.voted.emit(agreed);
       },
     });
