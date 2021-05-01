@@ -1,26 +1,36 @@
 import { createContext } from "preact";
 import { html, Component } from "htm/preact";
+import { EVENTS } from "../domain";
+import { EventBus } from "./EventBus";
 
-const DEFAULT_STATE = {
-  domElement: null,
-};
+const EventContext = createContext<EventContextProvider>(null);
 
-const EventContext = createContext(DEFAULT_STATE.domElement);
+interface IProps {
+  eventBusElement: any;
+}
 
-class EventContextProvider extends Component {
-  state = DEFAULT_STATE;
+class EventContextProvider extends Component<IProps> {
+  eventBus = null;
 
-  set = async (domElement) => {
-    this.setState(() => {
-      domElement;
-    });
+  componentDidMount() {
+    const { eventBusElement } = this.props;
+    this.eventBus = new EventBus(eventBusElement);
+  }
+  componentWillUnmount() {
+    // remove the link to the dom element
+    this.eventBus.destroy();
+    this.eventBus = null;
+  }
+
+  emit = (eventName: EVENTS, eventValue) => {
+    this.eventBus.emit(eventName, eventValue);
   };
 
   render() {
     return html`<${EventContext.Provider}
         value=${{
           ...this.state,
-          set: this.set,
+          emit: this.emit,
         }}
       >
         ${this.props.children}

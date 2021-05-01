@@ -15,6 +15,7 @@ function init(domElement, options) {
   render(
     html`
       <${PreactApp}
+        eventBusElement=${domElement}
         name=${name}
         options=${rest}
         ref=${(childComponent) => {

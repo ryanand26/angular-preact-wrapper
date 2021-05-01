@@ -16,7 +16,7 @@ import { Component } from "@angular/core";
 export class VoteTakerComponent {
   agreed = 0;
   disagreed = 0;
-  voters = ["Narco"];
+  voters = ["VoterNameValue"];
 
   onVoted(agreed: boolean) {
     agreed ? this.agreed++ : this.disagreed++;
