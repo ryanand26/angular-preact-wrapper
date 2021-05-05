@@ -6,7 +6,7 @@ import { EventBus } from "./EventBus";
 const EventContext = createContext<EventContextProvider>(null);
 
 interface IProps {
-  eventBusElement: any;
+  eventBusElement: HTMLElement;
 }
 
 class EventContextProvider extends Component<IProps> {

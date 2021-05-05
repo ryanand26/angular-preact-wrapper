@@ -4,7 +4,7 @@ import { PreactApp } from "./PreactApp";
 const NOOP = () => null;
 
 function init(domElement, options) {
-  const { name, onRef = NOOP, ...rest } = options;
+  const { name, onRef = NOOP, getProps } = options;
 
   if (!domElement) {
     throw `DOM element not provided for ${name}`;
@@ -17,7 +17,7 @@ function init(domElement, options) {
       <${PreactApp}
         eventBusElement=${domElement}
         name=${name}
-        options=${rest}
+        getProps=${getProps}
         ref=${(childComponent) => {
           onRef(childComponent);
         }}
